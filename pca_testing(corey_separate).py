@@ -75,6 +75,7 @@ def plot2d(all_samples, sample_ids=None, distort=False):
     matrix_w = np.hstack((eig_pairs[0][1].reshape(8,1),
                           eig_pairs[1][1].reshape(8,1)))
     transformed = matrix_w.T.dot(all_samples)
+    return transformed
     if distort:
         minimum = np.amin(transformed, axis=1)
         transformed = transformed.T
@@ -83,7 +84,6 @@ def plot2d(all_samples, sample_ids=None, distort=False):
         maximum = np.amax(transformed.T, axis = 1)
         for i in range(len(transformed)):
             transformed[i] = transformed[i]*127/maximum
-        return transformed
         transformed = transformed.T
     fig = plt.figure(figsize=(7,7))
     ax = fig.add_subplot(111)
