@@ -35,13 +35,12 @@ def plot(all_samples, sample_ids=None, distort=False):
                           eig_pairs[1][1].reshape(8,1),
                           eig_pairs[2][1].reshape(8,1)))
     transformed = matrix_w.T.dot(all_samples)
-    #return transformed
     if distort:
         minimum = np.amin(transformed, axis=1)
         transformed = transformed.T
         for i in range(len(transformed)):
             transformed[i] = transformed[i] - minimum
-        maximum = np.amin(transformed, axis = 0)
+        maximum = np.amax(transformed.T, axis = 1)
         for i in range(len(transformed)):
             transformed[i] = transformed[i]*127/maximum
         transformed = transformed.T
@@ -78,12 +77,10 @@ def plot2d(all_samples, sample_ids=None, distort=False):
     transformed = matrix_w.T.dot(all_samples)
     if distort:
         minimum = np.amin(transformed, axis=1)
-        print(minimum)
         transformed = transformed.T
         for i in range(len(transformed)):
             transformed[i] = transformed[i] - minimum
         maximum = np.amax(transformed.T, axis = 1)
-        print(maximum)
         for i in range(len(transformed)):
             transformed[i] = transformed[i]*127/maximum
         return transformed
